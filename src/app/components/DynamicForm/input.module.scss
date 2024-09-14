@@ -1,6 +1,8 @@
 .formContainer {
     width: 100%;
     max-width: 400px;
+    max-height: 500px;
+    overflow: auto;
     background-color: white;
     padding: 20px;
     border-radius: 8px;

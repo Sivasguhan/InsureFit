@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import UserForm from "../components/UserForm";
+import { setUserId } from '@/store/userSlice';
 
 const LoginPage = () => {
   const router = useRouter();

@@ -4,52 +4,21 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./input.module.scss";
 import ScreenContainer from "../ScreenContainer";
 
-const DynamicForm = ({ fieldConfigs, validationSchema, respValues = {} }) => {
-  console.log(fieldConfigs);
+const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading }) => {
 
-  // useEffect(() => {
-  //   const fetchInitialValues = async () => {
-  //     try {
-  //       const response = await fetch("/api/initial-values");
-  //       const data = await response.json();
-  //       setInitialValues(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch initial values:", error);
-  //     }
-  //   };
-
-  //   // fetchInitialValues();
-  // }, []);
-
-  const handleSubmit = async (values) => {
-    // try {
-    //   const response = await fetch(
-    //     "https://rbac-canary-new.vue.ai/docs#/workflows/async_run_workflow_api_v1_workflow_async_run_post",
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(body),
-    //     }
-    //   );
-
-    //   if (!response.ok) {
-    //     throw new Error("Failed to upload");
-    //   }
-    // } catch (error) {
-    //   console.error("Upload failed:", error);
-    // }
+  const handleSubmit = (values) => {
     console.log("Form values:", values);
   };
 
   return (
     <ScreenContainer>
+      {loading && <p style={{color: 'purple'}}>Fetching details...</p>}
       <div className={styles.formContainer}>
       <Formik
         initialValues={respValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        enableReinitialize={true}
       >
         {({ isSubmitting, values }) => (
           <Form>
