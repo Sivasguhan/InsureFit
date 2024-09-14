@@ -23,6 +23,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -49,8 +50,46 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100%;
   background-color: #f8f9fa;
+
+  .headerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+    background-color: #f5f5f5;
+
+    .backButton {
+      position: absolute;
+      left: 1rem;
+      background-color: transparent;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #000;
+    }
+    
+    .headerTitle {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .screenContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+  }
 }
 
 .submitButton {
