@@ -60,6 +60,7 @@ const UploadFile = () => {
 
     return (
         <ScreenContainer>
+            <div style={{padding: "20px", width: "100%"}}>
             {docTypes.map((item) => (
                 <CustomFileInput
                     key={item.id}
@@ -77,6 +78,7 @@ const UploadFile = () => {
                 Proceed
             </button>
             {error && <p className="errorMessage">{error}</p>}
+            </div>
         </ScreenContainer>
     );
 };

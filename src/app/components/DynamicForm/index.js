@@ -4,10 +4,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import styles from "./input.module.scss";
 import ScreenContainer from "../ScreenContainer";
 
-const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading }) => {
+const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading, onSubmit }) => {
 
   const handleSubmit = (values) => {
-    console.log("Form values:", values);
+    onSubmit(values);
   };
 
   return (
@@ -43,7 +43,6 @@ const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading }) =>
             ))}
             <button
               type="submit"
-              disabled={isSubmitting}
               className="submitButton"
             >
               Submit

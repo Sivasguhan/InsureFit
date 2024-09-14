@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const personalFormValidationSchema = Yup.object({
+const formValidationSchema = Yup.object({
   first_name: Yup.string().required("First Name is required"),
   last_name: Yup.string().required("Last Name is required"),
   sex: Yup.string().required("Sex is required"),
@@ -19,7 +19,6 @@ const personalFormValidationSchema = Yup.object({
   regular_exercise: Yup.string().required("Regular exercise status is required")
 });
 
-
 const personalFormFieldConfigs = [
   { name: "first_name", type: "text", label: "First Name" },
   { name: "last_name", type: "text", label: "Last Name" },
@@ -29,6 +28,9 @@ const personalFormFieldConfigs = [
   { name: "no_of_dependents", type: "number", label: "Number of Dependents" },
   { name: "job_title", type: "text", label: "Job Title" },
   { name: "income", type: "number", label: "Income" },
+];
+
+const healthFormFieldConfigs = [
   { name: "weight", type: "number", label: "Weight (kg)" },
   { name: "height", type: "number", label: "Height (cm)" },
   { name: "bmi", type: "number", label: "BMI" },
@@ -36,7 +38,7 @@ const personalFormFieldConfigs = [
   { name: "smoker", type: "text", label: "Smoker" },
   { name: "bloodpressure", type: "number", label: "Blood Pressure" },
   { name: "diabetes", type: "text", label: "Diabetes" },
-  { name: "regular_exercise", type: "text", label: "Regular Exercise" }
-];
+  { name: "regular_exercise", type: "text", label: "Regular Exercise" },
+]
 
-export { personalFormValidationSchema, personalFormFieldConfigs };
+export { formValidationSchema, personalFormFieldConfigs, healthFormFieldConfigs };
