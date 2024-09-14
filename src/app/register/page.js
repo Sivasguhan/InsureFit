@@ -1,10 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import UserForm from "../components/UserForm";
+import { setUserId } from '@/store/userSlice';
 
 const RegisterPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -29,6 +32,7 @@ const RegisterPage = () => {
 
   const onSubmitForm = async (formData) => {
     setError(null);
+    const uuid = generateUUID();
     try {
       setLoading(true);
       const response = await fetch(
@@ -43,7 +47,7 @@ const RegisterPage = () => {
           body: JSON.stringify({
             data: [
               {
-                user_id: generateUUID(),
+                user_id: uuid,
                 username: formData.username,
                 password: formData.password,
               },
@@ -55,6 +59,7 @@ const RegisterPage = () => {
       const data = await response.json();
       if (response.ok && data) {
         router.push('/upload-file');
+        dispatch(setUserId(uuid));
       } else {
         setError("Failed to create user");
       }

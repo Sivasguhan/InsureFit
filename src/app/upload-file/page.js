@@ -69,6 +69,7 @@ const UploadFile = () => {
       type="submit"
       onClick={uploadToServer}
       className={"submitButton"}
+      style={{ marginTop: "20px" }}
     >
       Proceed
     </button>

@@ -1,44 +1,29 @@
 "use client";
 import Image from "next/image";
-
 import { useState, useEffect } from "react";
-
 import styles from "./page.module.scss";
-import CustomFileInput from "./components/CustomFileInput";
 import SplashScreen from "./components/SplashScreen";
-import DynamicForm from "./components/DynamicForm";
-
-import {
-  personalFormFieldConfigs,
-  personalFormValidationSchema,
-} from "./utils/formUtils";
 import Link from "next/link";
 
 export default function Home() {
 
   const [loading, setLoading] = useState(true);
-  const [userStatus, setUserStatus] = useState("");
-
-  const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1500);
 
-    return () => clearTimeout(timer); // Cleanup timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   return loading ? (
     <SplashScreen />
   ) : (
     <div
-      className={`${styles.page} ${responseData ? styles.dataPosted : ""} ${
-        !userStatus ? styles.freshScreen : styles[userStatus]
-      }`}
+      className={`${styles.page} ${styles.freshScreen}`}
     >
       <div className={styles.main}>
-        {/* {!userStatus ? ( */}
           <>
             <div className={styles.logo}>
               <Image
@@ -73,35 +58,6 @@ export default function Home() {
               Existing User
             </Link>
           </>
-        {/* ) : !responseData ? (
-          <>
-            {docTypes.map((item) => (
-              <CustomFileInput
-                key={item.id}
-                docType={item.id}
-                label={item.label}
-                setImageBase64={setImageBase64}
-              />
-            ))}
-            <button
-              type="submit"
-              onClick={uploadToServer}
-              className={"submitButton"}
-            >
-              Proceed
-            </button>
-            {error && <p className="errorMessage">{error}</p>}
-          </>
-        ) : userStatus == "new" ? (
-          <>
-            <DynamicForm
-              validationSchema={personalFormValidationSchema}
-              fieldConfigs={personalFormFieldConfigs}
-            />
-          </>
-        ) : (
-          <></>
-        )} */}
       </div>
     </div>
   );

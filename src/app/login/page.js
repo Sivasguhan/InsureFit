@@ -1,10 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import UserForm from "../components/UserForm";
 
 const LoginPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,7 @@ const LoginPage = () => {
       const data = await response.json();
       if(data.data.results.length > 0) {
         router.push('/upload-file');
+        dispatch(setUserId(data.data.results[0].user_id));
       }
       else {
         setError("Invalid username or password");
