@@ -53,7 +53,7 @@ const LoginPage = () => {
 
       const data = await response.json();
       if(data.data.results.length > 0) {
-        router.push('/upload-file');
+        router.push('/home');
         dispatch(setUserId(data.data.results[0].user_id));
       }
       else {
