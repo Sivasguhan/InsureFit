@@ -6,7 +6,6 @@ export default function HomeScreenContainer({ children }) {
     return (
         <div className="mainContainer">
             <header className='headerContainer'>
-                <script src="https://cdn.tailwindcss.com"></script>
                 <Image
                     src="/img/logo.png"
                     width={40}

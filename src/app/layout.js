@@ -21,6 +21,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <header>
+        <script src="https://cdn.tailwindcss.com"></script>
+      </header>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ReduxProvider>
           {children}

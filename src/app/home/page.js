@@ -1,19 +1,24 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from 'react-redux';
 
 import HomeScreenContainer from "../components/HomeScreenContainer";
 
 export default function Home() {
+    const router = useRouter();
+    const userId = useSelector((state) => state.user.userId);
+
     const [policy_details, set_policy_details] = useState({
-        "policy_id": "TEST",
-        "policy_name": "TEST",
-        "terms": "TEST",
-        "duration": "TEST",
-        "premium": "TEST",
-        "coverage": "TEST",
-        "description": "TEST",
-        "offers": "TEST",
-        "vue_timestamp": "TEST6"
+        "policy_id": "",
+        "policy_name": "",
+        "terms": "",
+        "duration": "",
+        "premium": "",
+        "coverage": "",
+        "description": "",
+        "offers": "",
+        "vue_timestamp": ""
     });
 
     const [rewards, set_rewards] = useState([{
@@ -28,9 +33,9 @@ export default function Home() {
     }])
 
     const [user_fitness_data, set_user_fitness] = useState({
-        "total_steps": 10000,
-        "total_active_time": 5,
-        "total_cal": 1200
+        "total_steps": 50000,
+        "total_active_time": 17,
+        "total_cal": 8200
     })
 
     useEffect(() => {
@@ -48,7 +53,7 @@ export default function Home() {
                         filter: {
                             operator: '',
                             operands: [
-                                { field: 'user_id', condition_operator: '==', value: "1c459410-914a-41c2-8394-5ee540f78be5" }
+                                { field: 'user_id', condition_operator: '==', value: userId }
                             ],
                         },
                     },
@@ -74,7 +79,7 @@ export default function Home() {
                                 filter: {
                                     operator: '',
                                     operands: [
-                                        { field: "policy_id", condition_operator: "==", value: "BH001" }
+                                        { field: "policy_id", condition_operator: "==", value: selected_policy_id }
                                     ],
                                 },
                             },
@@ -101,7 +106,7 @@ export default function Home() {
                                 filter: {
                                     operator: '',
                                     operands: [
-                                        { field: "policy_id", condition_operator: "==", value: "BH001" }
+                                        { field: "policy_id", condition_operator: "==", value: selected_policy_id }
                                     ],
                                 },
                             },
