@@ -117,7 +117,7 @@ const UserDetails = () => {
         const isHealthDetailsSubmitSuccess = upsertData('b2757110-71df-11ef-8661-9eeba5939e7d', healthFormValues);
 
         if(isPersonalDetailsSubmitSuccess && isHealthDetailsSubmitSuccess) {
-            router.push('/');
+            router.push('/home');
         }
     }
 
