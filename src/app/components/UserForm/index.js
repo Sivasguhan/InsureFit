@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './userform.module.scss';
 
-const UserForm = ({ isCreateMode, onSubmitForm }) => {
+const UserForm = ({ isCreateMode, onSubmitForm, error }) => {
   const initialValues = {
     username: '',
     password: '',
@@ -53,6 +53,7 @@ const UserForm = ({ isCreateMode, onSubmitForm }) => {
               <button id="submit"type="submit" className={styles.submitButton}>
                 {isCreateMode ? 'Create User' : 'Login'}
               </button>
+              {error && <p style={{ color: "red" }}>{error}</p>}
             </Form>
           )}
         </Formik>

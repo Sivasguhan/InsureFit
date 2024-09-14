@@ -5,6 +5,7 @@ import UserForm from "../components/UserForm";
 
 const LoginPage = () => {
   const router = useRouter();
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const LoginPage = () => {
   }, [loading])
 
   const onSubmitForm = async (formData) => {
+    setError(null)
     try {
       setLoading(true);
       const response = await fetch(
@@ -50,14 +52,17 @@ const LoginPage = () => {
       if(data.data.results.length > 0) {
         router.push('/upload-file');
       }
+      else {
+        setError("Invalid username or password");
+      }
     } catch (error) {
-      console.error('Error during API call:', error);
+      setError(error);
     } finally {
       setLoading(false);
     }
   };
 
-  return <UserForm isCreateMode={false} onSubmitForm={onSubmitForm} />;
+  return <UserForm isCreateMode={false} onSubmitForm={onSubmitForm} error={error}/>;
 };
 
 export default LoginPage;

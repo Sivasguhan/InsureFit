@@ -5,6 +5,7 @@ import UserForm from "../components/UserForm";
 
 const RegisterPage = () => {
   const router = useRouter();
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const RegisterPage = () => {
   };
 
   const onSubmitForm = async (formData) => {
+    setError(null);
     try {
       setLoading(true);
       const response = await fetch(
@@ -54,16 +56,16 @@ const RegisterPage = () => {
       if (response.ok && data) {
         router.push('/upload-file');
       } else {
-        console.error('Error in API response:', data);
+        setError("Failed to create user");
       }
     } catch (error) {
-      console.error('Error during API call:', error);
+      setError(error);
     } finally {
       setLoading(false);
     }
   };
 
-  return <UserForm isCreateMode={true} onSubmitForm={onSubmitForm}/>;
+  return <UserForm isCreateMode={true} onSubmitForm={onSubmitForm} error={error}/>;
 };
 
 export default RegisterPage;

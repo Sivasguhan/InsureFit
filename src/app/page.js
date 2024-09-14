@@ -49,7 +49,7 @@ export default function Home() {
               />
             </div>
             <Link 
-              href="/login"
+              href="/register"
               className={styles.userSelect}
             >
               <Image
@@ -61,7 +61,7 @@ export default function Home() {
               New User
             </Link>
             <Link
-              href="/register"
+              href="/login"
               className={styles.userSelect}
             >
               <Image
