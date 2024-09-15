@@ -1,9 +1,11 @@
 'use client';
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { useRouter } from "next/navigation";
 import ScreenContainer from "../components/ScreenContainer";
 import CustomFileInput from "../components/CustomFileInput";
+import { setJobId } from '@/store/docUploadStore';
 
 const docTypes = [
     { label: "Upload KYC document", id: "kyc" },
@@ -12,6 +14,7 @@ const docTypes = [
 ];
 
 const UploadFile = () => {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [error, setError] = useState(null);
     const [imageBase64, setImageBase64] = useState({
@@ -30,7 +33,11 @@ const UploadFile = () => {
         }
 
         const body = {
-            aadhar_image: imageBase64.kyc,
+            "data": {
+                aadhar_image: imageBase64.kyc,
+                health_doc_image: imageBase64.healthDoc,
+                payslip_image: imageBase64.paySlip
+            }
         };
 
         try {
@@ -42,7 +49,7 @@ const UploadFile = () => {
                         "accept": "application/json",
                         "Content-Type": "application/json",
                         "x-api-key": "c30c71fb-f509-4c6f-9c2c-b0aee5a9a167",
-                        "x-client-id": userId,
+                        "x-client-id": userId
                     },
                     body: JSON.stringify(body),
                 }
@@ -51,6 +58,9 @@ const UploadFile = () => {
             if (!response.ok) {
                 setError("Failed to upload the file. Try again");
             } else {
+                response.json().then((data) => {
+                    dispatch(setJobId(data["data"]["job_id"]))
+                })
                 router.push("/user-details");
             }
         } catch (error) {

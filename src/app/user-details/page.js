@@ -12,6 +12,7 @@ const UserDetails = () => {
     const intervalIdRef = useRef(null);
     const userId = useSelector((state) => state.user.userId);
     const userData = useSelector((state) => state.user.userData);
+    const jobId = useSelector((state) => state.docUpload.jobId);
     const [loading, setLoading] = useState(true);
 
     const fetchUserData = async (datasetId) => {
@@ -53,21 +54,23 @@ const UserDetails = () => {
     useEffect(() => {
         const checkStatus = async () => {
             try {
-                const response = await fetch('https://rbac-canary-new.vue.ai/api/v1/jobs/0_eastus_g-900ceefa_14092024_1726298988_ce050e3a', {
+                const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}/node/doc_extractor/payload`, {
                     method: 'GET',
                     headers: {
                         'accept': 'application/json',
                         'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
-                        'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
-                        'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+                        'x-client-id': "ee45c008-588a-4639-85e3-c1495f5c4400",
+                        "x-client-name": userId
                     }
                 });
 
                 if (response.ok) {
                     clearInterval(intervalIdRef.current);
                     setLoading(false);
-                    fetchUserData('f3e51ee2-71db-11ef-adf7-aeb22775e287');
-                    fetchUserData('b2757110-71df-11ef-8661-9eeba5939e7d');
+                    const data = await response.json();
+                    dispatch(setUserData(data.data.data[0]));
+                    // fetchUserData('f3e51ee2-71db-11ef-adf7-aeb22775e287');
+                    // fetchUserData('b2757110-71df-11ef-8661-9eeba5939e7d');
                 }
             } catch (error) {
                 console.error('Error fetching status:', error);
