@@ -39,6 +39,7 @@ export default function Home() {
     })
 
     useEffect(() => {
+        new Promise(r => setTimeout(r, 2000));
         fetch(
             "https://rbac-canary-new.vue.ai/api/v2/datasets/b97fbd70-729e-11ef-b463-62737aa4e329/query",
             {
@@ -116,6 +117,37 @@ export default function Home() {
                     }
                 ).then(res => res.json()).then(data => {
                     set_rewards(data["data"]["results"]);
+                    // GET USER FITNESS DATA
+                    fetch(
+                        "https://rbac-canary-new.vue.ai/api/v2/datasets/00da0492-7389-11ef-be15-eaf6eaa00cec/query",
+                        {
+                            method: 'POST',
+                            headers: {
+                                'accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
+                            },
+                            body: JSON.stringify({
+                                query: {
+                                    filter: {
+                                        operator: '',
+                                        operands: [
+                                            { field: "user_id", condition_operator: "==", value: userId }
+                                        ],
+                                    },
+                                },
+                                offset: 0,
+                                limit: 10,
+                            }),
+                        }
+                    ).then(res => res.json()).then(data => {
+                        const user_fitness_data = {
+                            "total_steps": data.total_steps ?? 0,
+                            "total_active_time": data.total_active_time ?? 0,
+                            "total_cal": data.total_cal ?? 0
+                        }
+                        set_user_fitness(user_fitness_data)
+                    })
                 })
             })
             .catch(error => {

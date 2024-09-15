@@ -21,11 +21,41 @@ export default function PolicyDetails() {
   const policyId = searchParams.get('id');
   const [isPayButtonClicked, setIsPayButtonClicked] = useState(false);
   const allPolicies = useSelector((state) => state.user.policyDetails);
+  const userId = useSelector((state) => state.user.userId);
   const policyDetails = allPolicies.find((policy) => policy.policy_id === policyId);
 
+  const upsertData = async (datasetId ,data) => {
+    const response = await fetch(`https://rbac-canary-new.vue.ai/api/v2/datasets/${datasetId}/upsert`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
+        'Content-Type': 'application/json',
+        'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+        'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+      },
+      body: JSON.stringify({
+        data: [
+          {
+            user_id: userId,
+            ...data,
+          },
+        ],
+      }),
+    });
+  
+    if (response.ok) {
+      return true;
+    }
+    return false;
+  }
+
   const handleButtonClick = () => {
-    if(!isPayButtonClicked) setIsPayButtonClicked(true);
-    else router.push('/home');
+    if (!isPayButtonClicked) setIsPayButtonClicked(true);
+    else {
+      upsertData("b97fbd70-729e-11ef-b463-62737aa4e329", {user_id: userId, policy_id: policyId})
+      router.push('/home')
+    };
   }
 
   return (
