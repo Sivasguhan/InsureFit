@@ -54,7 +54,7 @@ const UserDetails = () => {
     useEffect(() => {
         const checkStatus = async () => {
             try {
-                const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}/node/doc_extractor/payload`, {
+                const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}`, {
                     method: 'GET',
                     headers: {
                         'accept': 'application/json',
@@ -65,12 +65,30 @@ const UserDetails = () => {
                 });
 
                 if (response.ok) {
-                    clearInterval(intervalIdRef.current);
-                    setLoading(false);
                     const data = await response.json();
-                    dispatch(setUserData(data.data.data[0]));
-                    // fetchUserData('f3e51ee2-71db-11ef-adf7-aeb22775e287');
-                    // fetchUserData('b2757110-71df-11ef-8661-9eeba5939e7d');
+                    if (data.data.status == "COMPLETED") {
+                        clearInterval(intervalIdRef.current);
+                        setLoading(false);
+
+                        // get data from node
+                        const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}/node/doc_extractor/payload`, {
+                            method: 'GET',
+                            headers: {
+                                'accept': 'application/json',
+                                'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
+                                'x-client-id': "ee45c008-588a-4639-85e3-c1495f5c4400",
+                                "x-client-name": userId
+                            }
+                        });
+        
+                        if (response.ok) {
+                            
+                            const data = await response.json();
+                            dispatch(setUserData(data.data.data[0]));
+                            // fetchUserData('f3e51ee2-71db-11ef-adf7-aeb22775e287');
+                            // fetchUserData('b2757110-71df-11ef-8661-9eeba5939e7d');
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching status:', error);

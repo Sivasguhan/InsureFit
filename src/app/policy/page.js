@@ -38,21 +38,28 @@ const PolicyListing = () => {
     };
 
     const getPolicyIds = async (jobId) => {
-        const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}/node/gpt_inference100/payload`, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json',
-                'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
-                'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
-                'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
-            },
-        })
-
-        if (response.ok) {
-            const data = await response.json();
-            getPolicyList(data.data || []);
-        } else {
-            console.error('Error fetching user data:', response.statusText);
+        for (let index = 0; index < 10; index++) {
+            const response = await fetch(`https://rbac-canary-new.vue.ai/api/v1/jobs/${jobId}/node/gpt_inference100/payload`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
+                    'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+                    'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+                },
+            })
+    
+            if (response.ok) {
+                const data = await response.json();
+                if (data.data == undefined || data.data == null){
+                    await new Promise(r => setTimeout(r, 2000));
+                    continue
+                }
+                getPolicyList(data.data.data || []);
+                break
+            } else {
+                console.error('Error fetching user data:', response.statusText);
+            }
         }
     }
 
