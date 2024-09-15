@@ -43,6 +43,8 @@ const RegisterPage = () => {
             'accept': 'application/json',
             'Content-Type': 'application/json',
             'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
+            'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+            'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
           },
           body: JSON.stringify({
             data: [

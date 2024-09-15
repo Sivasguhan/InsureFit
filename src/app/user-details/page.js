@@ -22,6 +22,8 @@ const UserDetails = () => {
                     'accept': 'application/json',
                     'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
                     'Content-Type': 'application/json',
+                    'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+                    'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
                 },
                 body: JSON.stringify({
                     query: {
@@ -56,7 +58,8 @@ const UserDetails = () => {
                     headers: {
                         'accept': 'application/json',
                         'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
-                        'x-client-id': userId,
+                        'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+                        'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
                     }
                 });
 
@@ -83,6 +86,8 @@ const UserDetails = () => {
             'accept': 'application/json',
             'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
             'Content-Type': 'application/json',
+            'x-client-id': 'ee45c008-588a-4639-85e3-c1495f5c4400',
+            'x-client-name': 'ee45c008-588a-4639-85e3-c1495f5c4400',
           },
           body: JSON.stringify({
             data: [
@@ -117,7 +122,7 @@ const UserDetails = () => {
         const isHealthDetailsSubmitSuccess = upsertData('b2757110-71df-11ef-8661-9eeba5939e7d', healthFormValues);
 
         if(isPersonalDetailsSubmitSuccess && isHealthDetailsSubmitSuccess) {
-            router.push('/home');
+            router.push('/policy');
         }
     }
 
