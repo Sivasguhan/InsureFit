@@ -70,24 +70,30 @@ const UploadFile = () => {
 
     return (
         <ScreenContainer>
-            <div style={{padding: "20px", width: "100%"}}>
-            {docTypes.map((item) => (
-                <CustomFileInput
-                    key={item.id}
-                    docType={item.id}
-                    label={item.label}
-                    setImageBase64={setImageBase64}
-                />
-            ))}
-            <button
-                type="submit"
-                onClick={uploadToServer}
-                className={"submitButton"}
-                style={{ marginTop: "20px" }}
-            >
-                Proceed
-            </button>
-            {error && <p className="errorMessage">{error}</p>}
+            <div className="w-5/6 font-sans h-full flex flex-col justify-around">
+                <div>
+                    <h2 className="font-black text-3xl">Upload your documents to proceed further</h2>
+                    <p className="text-sm pt-2">We will process these documents to recommend the best policy for you.</p>
+                </div>
+                <div>
+                    {docTypes.map((item) => (
+                        <CustomFileInput
+                            key={item.id}
+                            docType={item.id}
+                            label={item.label}
+                            setImageBase64={setImageBase64}
+                        />
+                    ))}
+                </div>
+                <button
+                    type="submit"
+                    onClick={uploadToServer}
+                    className="mt-10 w-full bg-[#14ba9a] p-4 rounded-full font-sans font-bold text-white uppercase"
+                    style={{ marginTop: "20px" }}
+                >
+                    Proceed
+                </button>
+                {error && <p className="errorMessage">{error}</p>}
             </div>
         </ScreenContainer>
     );
