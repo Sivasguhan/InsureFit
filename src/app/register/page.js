@@ -13,7 +13,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     const submitButtonElement = document.getElementById("submit");
-    if(loading) {
+    if (loading) {
       submitButtonElement.innerHTML = "Please wait...";
       submitButtonElement.disabled = true;
     } else {
@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
   // Function to generate a random UUID
   const generateUUID = () => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
@@ -36,7 +36,7 @@ const RegisterPage = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        "https://rbac-canary-new.vue.ai/api/v2/datasets/acf0a85e-71b2-11ef-b26a-aeb22775e287/upsert", 
+        "https://rbac-canary-new.vue.ai/api/v2/datasets/acf0a85e-71b2-11ef-b26a-aeb22775e287/upsert",
         {
           method: 'POST',
           headers: {
@@ -72,7 +72,7 @@ const RegisterPage = () => {
     }
   };
 
-  return <UserForm isCreateMode={true} onSubmitForm={onSubmitForm} error={error}/>;
+  return <UserForm isCreateMode={true} onSubmitForm={onSubmitForm} error={error} />;
 };
 
 export default RegisterPage;

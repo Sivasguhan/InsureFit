@@ -21,8 +21,8 @@ const UserForm = ({ isCreateMode, onSubmitForm, error }) => {
 
   return (
     <ScreenContainer>
-      <div className={styles.formWrapper}>
-        <h1 className={styles.formTitle}>{isCreateMode ? 'CREATE USER' : 'LOGIN'}</h1>
+      <div className="w-4/5 h-full flex flex-col justify-around">
+        <h1 className={styles.formTitle + " text-6xl font-mono tracking-tight"}>{isCreateMode ? 'CREATE USER' : 'LOGIN'}</h1>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -36,7 +36,7 @@ const UserForm = ({ isCreateMode, onSubmitForm, error }) => {
                   id="username"
                   name="username"
                   placeholder="Enter your username"
-                  className={styles.inputField}
+                  className="border-[#14ba9a] border bg-white p-4 rounded-lg w-full mb-5"
                 />
                 <ErrorMessage name="username" component="div" className={styles.error} />
               </div>
@@ -46,11 +46,11 @@ const UserForm = ({ isCreateMode, onSubmitForm, error }) => {
                   id="password"
                   name="password"
                   placeholder="Enter your password"
-                  className={styles.inputField}
+                  className="border-[#14ba9a] border bg-white p-4 rounded-lg w-full mb-5"
                 />
                 <ErrorMessage name="password" component="div" className={styles.error} />
               </div>
-              <button id="submit"type="submit" className={styles.submitButton}>
+              <button id="submit"type="submit" className="mt-10 w-full bg-[#14ba9a] p-4 rounded-full font-sans font-bold text-white uppercase">
                 {isCreateMode ? 'Create User' : 'Login'}
               </button>
               {error && <p style={{ color: "red" }}>{error}</p>}
