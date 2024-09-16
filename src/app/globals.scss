@@ -52,6 +52,7 @@ a {
   justify-content: center;
   height: 100%;
   background-color: #f8f9fa;
+  overflow: hidden;
 
   .headerContainer {
     display: flex;
@@ -81,6 +82,7 @@ a {
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: calc(100% - 80px);
     flex-grow: 1;
   }
 }
