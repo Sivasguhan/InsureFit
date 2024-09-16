@@ -64,7 +64,13 @@ export default function Home() {
             }
         ).then(res => res.status == 200 ? res.json() : null)
             .then(data => {
-                const selected_policy_id = data["data"]["results"][0]["policy_id"];
+                var selected_policy_id = null;
+                try {
+                    selected_policy_id = data["data"]["results"][0]["policy_id"];
+                } catch (error) {
+                    console.log(data)
+                    if (data.count == 0) router.push("/policy");
+                }
                 // FETCH POLICY DETAILS
                 fetch(
                     "https://rbac-canary-new.vue.ai/api/v2/datasets/26e5fe52-71c2-11ef-875d-6e798490894d/query",
