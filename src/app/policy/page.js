@@ -15,8 +15,6 @@ const PolicyListing = () => {
     const policyDetails = useSelector((state) => state.user.policyDetails);
     const recommendedPolicy = useSelector((state) => state.user.recommendedPolicy);
 
-    const [policy_reocs, set_policy_recos] = useState([])
-
     const runWorkflow = async () => {
         const response = await fetch('https://rbac-canary-new.vue.ai/api/v1/workflow/async/run?workflow_id=bd943d36-71ff-11ef-bf38-9ee7bd89bd7e&use_stephanie=false&use_dataset_api=false&disable_cache=true', {
             method: 'POST',
@@ -57,7 +55,6 @@ const PolicyListing = () => {
                     await new Promise(r => setTimeout(r, 2000));
                     continue
                 }
-                set_policy_recos(data.data.data);
                 getPolicyList(data.data.data || []);
                 break
             } else {
@@ -96,7 +93,7 @@ const PolicyListing = () => {
             var ordered_policy = Array(data.data.results.length).fill(null);
             data.data.results.forEach(element => {
                 const _policy_id = element.policy_id;
-                ordered_policy[policy_reocs.indexOf(_policy_id)] = element;
+                ordered_policy[policyIds.indexOf(_policy_id)] = element;
             });
             dispatch(setPolicyDetails(ordered_policy));
         } else {
@@ -133,7 +130,7 @@ const PolicyListing = () => {
                     <span className="font-bold text-lg">Insurance Plans</span>
                     <section className="flex flex-col mt-6">
                         {policyDetails.map((policy, index) => (
-                            <div key={index} className="flex justify-between border-[#14ba9a] border bg-white p-4 rounded-lg w-full mb-5 cursor-pointer" onClick={() => {
+                            <div key={index} className="flex justify-between border-[#14ba9a] border bg-white p-4 rounded-lg w-full mb-5 cursor-pointer hover:bg-gray-400 hover:fold-bold hover:shadow-lg" onClick={() => {
                                 router.push(`/policy-details?id=${policy.policy_id}`);
                             }}>
                                 <p className={styles.planName}>{policy?.policy_name}</p>

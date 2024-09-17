@@ -11,7 +11,7 @@ const formValidationSchema = Yup.object({
   income: Yup.number().min(0, "Income cannot be negative").required("Income is required"),
   weight: Yup.number().min(0, "Weight must be positive").required("Weight is required"),
   height: Yup.number().min(0, "Height must be positive").required("Height is required"),
-  bmi: Yup.number().min(0, "BMI must be positive").required("BMI is required"),
+  bmi: Yup.number().default(0),
   hereditary_diseases: Yup.string().required("Hereditary diseases are required"),
   smoker: Yup.string().required("Smoker status is required"),
   bloodpressure: Yup.number().min(0, "Blood pressure must be positive").required("Blood pressure is required"),
@@ -33,7 +33,7 @@ const personalFormFieldConfigs = [
 const healthFormFieldConfigs = [
   { name: "weight", type: "number", label: "Weight (kg)" },
   { name: "height", type: "number", label: "Height (cm)" },
-  { name: "bmi", type: "number", label: "BMI" },
+  { name: "bmi", type: "number", label: "BMI", hidden: true },
   { name: "hereditary_diseases", type: "text", label: "Hereditary Diseases" },
   { name: "smoker", type: "text", label: "Smoker" },
   { name: "bloodpressure", type: "number", label: "Blood Pressure" },

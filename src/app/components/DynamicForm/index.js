@@ -7,6 +7,7 @@ import ScreenContainer from "../ScreenContainer";
 const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading, onSubmit }) => {
 
   const handleSubmit = (values) => {
+    values["bmi"] = (values["weight"] / (values["height"] * values["height"])) * 10000;
     onSubmit(values);
   };
 
@@ -23,7 +24,7 @@ const DynamicForm = ({ fieldConfigs, validationSchema, respValues, loading, onSu
           {({ isSubmitting, values }) => (
             <Form>
               {fieldConfigs.map((field) => (
-                <div key={field.name} className={styles.customFileWrap}>
+                <div key={field.name} className={styles.customFileWrap} hidden={field.hidden ?? false}>
                   <label htmlFor={field.name} className={styles.customLabel}>
                     {field.label}
                   </label>

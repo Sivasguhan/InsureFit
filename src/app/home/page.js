@@ -68,8 +68,9 @@ export default function Home() {
                 try {
                     selected_policy_id = data["data"]["results"][0]["policy_id"];
                 } catch (error) {
-                    console.log(data)
-                    if (data.count == 0) router.push("/policy");
+                    if (data.data.count == 0) {
+                        router.push("/policy")
+                    };
                 }
                 // FETCH POLICY DETAILS
                 fetch(
