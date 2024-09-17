@@ -9,18 +9,6 @@ export default function Home() {
     const router = useRouter();
     const userId = useSelector((state) => state.user.userId);
 
-    const [policy_details, set_policy_details] = useState({
-        "policy_id": "",
-        "policy_name": "",
-        "terms": "",
-        "duration": "",
-        "premium": "",
-        "coverage": "",
-        "description": "",
-        "offers": "",
-        "vue_timestamp": ""
-    });
-
     const [rewards, set_rewards] = useState([{
         "reward_id": "R001",
         "policy_id": "BH001",
@@ -33,9 +21,9 @@ export default function Home() {
     }])
 
     const [user_fitness_data, set_user_fitness] = useState({
-        "total_steps": 50000,
-        "total_active_time": 17,
-        "total_cal": 8200
+        "total_steps": 0,
+        "total_active_time": 0,
+        "total_cal": 0
     })
 
     useEffect(() => {
@@ -64,40 +52,7 @@ export default function Home() {
             }
         ).then(res => res.status == 200 ? res.json() : null)
             .then(data => {
-                var selected_policy_id = null;
-                try {
-                    selected_policy_id = data["data"]["results"][0]["policy_id"];
-                } catch (error) {
-                    if (data.data.count == 0) {
-                        router.push("/policy")
-                    };
-                }
-                // FETCH POLICY DETAILS
-                fetch(
-                    "https://rbac-canary-new.vue.ai/api/v2/datasets/26e5fe52-71c2-11ef-875d-6e798490894d/query",
-                    {
-                        method: 'POST',
-                        headers: {
-                            'accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            'x-api-key': 'c30c71fb-f509-4c6f-9c2c-b0aee5a9a167',
-                        },
-                        body: JSON.stringify({
-                            query: {
-                                filter: {
-                                    operator: '',
-                                    operands: [
-                                        { field: "policy_id", condition_operator: "==", value: selected_policy_id }
-                                    ],
-                                },
-                            },
-                            offset: 0,
-                            limit: 1,
-                        }),
-                    }
-                ).then(res => res.json()).then(data => {
-                    set_policy_details(data["data"]["results"][0]);
-                })
+                var selected_policy_id = data["data"]["results"][0]["policy_id"];
 
                 // FETCH REWARDS DETAILS
                 fetch(
@@ -150,8 +105,8 @@ export default function Home() {
                         const results = data.data.results;
                         var user_fitness_data = {
                             "total_steps": 0,
-                            "total_active_time": data.total_active_time ?? 0,
-                            "total_cal": data.total_cal ?? 0
+                            "total_active_time": 0,
+                            "total_cal": 0
                         }
                         for (let index = 0; index < results.length; index++) {
                             const element = results[index];
@@ -172,32 +127,40 @@ export default function Home() {
 
     return (
         <HomeScreenContainer>
-            <div className='ml-5 mr-5 h-full flex flex-col justify-around'>
-                <section className="p-5 rounded-md shadow-lg bg-gradient-to-tr from-[#B9E8DF] to-[#0A856D] font-sans">
-                    <h2 className='text-3xl font-black text-gray-900'>{policy_details.policy_name}</h2>
-                    <p className=''>{policy_details.description}</p>
-                    <div className='flex flex-row justify-between mt-20 text-xs font-bold text-black uppercase'>
-                        <p>{policy_details.coverage}</p>
-                        <p>{policy_details.premium}</p>
-                    </div>
-                </section>
-                <div className="mt-5 w-full">
+            <div className='h-full w-5/6 flex flex-col justify-around'>
+                <div className="mt-5 w-full overflow-scroll">
                     {
                         rewards.map((reward, index) => (
-                            <div className='mb-5'>
-                                <div className="flex justify-between mb-1">
-                                    <span className="text-base font-medium text-black">{reward.reward_name}</span>
-                                    <span className="text-sm font-medium text-black">{Math.round((user_fitness_data[reward.fitness_type]/reward.fitness_threshold)*100, 2)}%</span>
+                            <div className='relative mb-5 border border-[#0A856D] rounded-md flex justify-between h-56'>
+                                <div className='absolute bg-[#0A856D] h-full left-0 rounded-md z-0 opacity-50' style={{ "width": `${Math.round((user_fitness_data[reward.fitness_type]/reward.fitness_threshold)*100, 2)}%` }}></div>
+                                <div className='flex flex-col w-full justify-between p-4 z-10'>
+                                    <div className="flex justify-between mb-1 font-black">
+                                        <span className="text-2xl uppercase text-black">{reward.reward_name}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <div className='flex flex-col text-center text-sm'>
+                                            <p className='font-bold'>Target</p>
+                                            <p>{reward.fitness_threshold}</p>
+                                        </div>
+                                        <div className='flex flex-col text-center text-sm'>
+                                            <p className='font-bold'>Current</p>
+                                            <p>{Math.round(user_fitness_data[reward.fitness_type], 2)}</p>
+                                        </div>
+                                        <div className='flex flex-col text-center text-sm'>
+                                            <p className='font-bold'>Remaining</p>
+                                            <p>{reward.fitness_threshold - Math.round(user_fitness_data[reward.fitness_type], 2)}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="w-full rounded-md h-4 border border-gray-400">
-                                    <div className="bg-teal-600 h-full rounded-md" style={{ "width": `${Math.round((user_fitness_data[reward.fitness_type]/reward.fitness_threshold)*100, 2)}%` }}></div>
+                                <div className='my-auto z-10 ml-5'>
+                                <span className="font-black text-2xl text-black h-full aligh-middle block text-center p-4">{Math.round((user_fitness_data[reward.fitness_type]/reward.fitness_threshold)*100, 2)}%</span>
                                 </div>
                             </div>
                         ))
                     }
                 </div>
-                <button className="mt-1 w-full bg-[#14ba9a] p-4 rounded-full font-sans font-bold text-white uppercase" onClick={() => router.push('/rewards_journey')}>
-                    See My Rewards Journey
+                <button className="mt-1 w-full bg-[#14ba9a] p-4 rounded-full font-sans font-bold text-white uppercase" onClick={() => router.push("/home")}>
+                    Go to Home
                 </button>
             </div>
         </HomeScreenContainer>
